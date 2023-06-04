@@ -45,27 +45,27 @@ namespace Test
 
         public void Info()
         {
-            Console.WriteLine("Name: " + name + " Health: " + health + " Mana: " + mana + "Failed: " + failed);
+            Console.WriteLine("Name: " + name + " Health: " + health + " Mana: " + mana + " Failed: " + failed);
         }
 
-        public virtual Tuple<int, int, int> Q (int health, int mana, int failed)
+        public virtual Tuple<int, int> Q (int health, int mana)
         {
-            return new Tuple<int, int,int>(health, mana, failed);
+            return new Tuple<int, int>(health, mana);
         }
 
-        public virtual Tuple<int, int, int> W(int health, int mana, int failed)
+        public virtual Tuple<int, int> W(int health, int mana)
         {
-            return new Tuple<int, int, int>(health, mana, failed);
+            return new Tuple<int, int>(health, mana);
         }
 
-        public virtual Tuple<int, int, int> E(int health, int mana, int failed)
+        public virtual Tuple<int, int> E(int health, int mana)
         {
-            return new Tuple<int, int, int>(health, mana, failed);
+            return new Tuple<int, int>(health, mana);
         }
 
-        public virtual Tuple<int, int, int, int> R(int health, int mana, int failed, int myHealth)
+        public virtual Tuple<int, int, int> R(int health, int mana, int myHealth)
         {
-            return new Tuple<int, int, int, int>(health, mana, failed, myHealth);
+            return new Tuple<int, int, int>(health, mana, myHealth);
         }
 
     }
@@ -80,20 +80,17 @@ namespace Test
         }
 
 
-        public override Tuple<int, int, int> Q(int rivalHealth, int mana, int failed)
+        public override Tuple<int, int> Q(int rivalHealth, int mana)
         {
             if (mana >= 2)
             {
                 rivalHealth -= 15;
             }
-            else
-            {
-                failed += 1;
-            }    
-            return new Tuple<int, int, int>(rivalHealth, mana, failed);
+ 
+            return new Tuple<int, int>(rivalHealth, mana);
         }
 
-        public override Tuple<int, int, int> W(int myHealth, int mana, int failed)
+        public override Tuple<int, int> W(int myHealth, int mana)
         {
             if (mana >= 3)
             {
@@ -104,7 +101,7 @@ namespace Test
                     myHealth = 100;
                 }
 
-                mana += 5;
+                mana += 2;
 
                 if (mana > 20)
                 {
@@ -112,37 +109,28 @@ namespace Test
                 }    
 
             }
-            else
-            {
-                failed += 1;
-            }    
 
-            return new Tuple<int, int, int>(myHealth, mana, failed);
+            return new Tuple<int, int>(myHealth, mana);
         }
 
-        public override Tuple<int, int, int> E(int rivalHealth, int mana, int failed)
+        public override Tuple<int, int> E(int rivalHealth, int mana)
         {
             if (mana >= 5)
             {
                 rivalHealth -= 30;
-            }    
-            else
-            {
-                failed += 1;
-            }    
+            }     
             
-            return new Tuple<int, int, int>(rivalHealth, mana, failed);
+            return new Tuple<int, int>(rivalHealth, mana);
         }
 
-        public override Tuple<int, int, int, int> R(int rivalHealth, int myHealth, int mana, int failed)
+        public override Tuple<int, int, int> R(int rivalHealth, int mana, int myHealth)
         {
             if (mana >= 10)
             {
                 rivalHealth -= 30;
-            } 
-                
-        
-            return new Tuple<int, int, int, int>(rivalHealth, myHealth, mana, failed);
+            }
+   
+            return new Tuple<int, int, int>(rivalHealth, mana, myHealth);
         }
 
     }
@@ -156,33 +144,26 @@ namespace Test
 
         }
 
-        public override Tuple<int, int, int> Q(int rivalHealth, int mana, int failed)
+        public override Tuple<int, int> Q(int rivalHealth, int mana)
         {
             if (mana >= 3)
             {
                 rivalHealth -= 20;
             }
-            else
-            {
-                failed += 1;
-            }
-            return new Tuple<int, int, int>(rivalHealth, mana, failed);
+            return new Tuple<int, int>(rivalHealth, mana);
         }
 
-        public override Tuple<int, int, int> W(int rivalHealth, int mana, int failed)
+        public override Tuple<int, int> W(int rivalHealth, int mana)
         {
             if (mana >= 3)
             {
                 rivalHealth -= 10;
             }
-            else
-            {
-                failed += 1;
-            }
-            return new Tuple<int, int, int>(rivalHealth, mana, failed);
+
+            return new Tuple<int, int>(rivalHealth, mana);
         }
 
-        public override Tuple<int, int, int> E(int myHealth, int mana, int failed)
+        public override Tuple<int, int> E(int myHealth, int mana)
         {
             if (mana >= 5)
             {
@@ -192,19 +173,23 @@ namespace Test
                     myHealth = 80;
                 }    
                 mana += 5;
-            }
-            else
-            {
-                failed += 1;
+                mana -= 5;
+                
+                if (mana > 20)
+                {
+                    mana = 20;
+                }    
+
             }
 
-            return new Tuple<int, int, int>(myHealth, mana, failed);
+            return new Tuple<int, int>(myHealth, mana);
         }
 
-        public override Tuple<int, int, int, int> R(int rivalHealth, int mana, int failed, int myHealth)
+        public override Tuple<int, int, int> R(int rivalHealth, int mana, int myHealth)
         {
             if (mana >= 10)
             {
+                mana -= 10;
                 rivalHealth -= 50;
                 mana = 20;
                 myHealth += 1;
@@ -212,13 +197,8 @@ namespace Test
                 {
                     myHealth = 80;
                 }
-            }
-
-            else
-            {
-                failed += 1;
-            }    
-            return new Tuple<int, int, int, int>(rivalHealth, mana, failed, myHealth);
+            }  
+            return new Tuple<int, int, int>(rivalHealth, mana, myHealth);
         }
 
     }
@@ -296,14 +276,14 @@ namespace Test
         }
 
         // Thi triển chiêu thức
-        public static void TakeAction(string name, int action, List<Hero> heroList)
+        public static void TakeAction(string name, string action, List<Hero> heroList)
         {
             int index = heroList.FindIndex(x => x.getName() == name);
             Hero hero = heroList[index];
             Hero rivalHero;
             int first_hero;
-            Tuple<int, int, int> result;
-            Tuple<int, int, int, int> resultR;
+            Tuple<int, int> result;
+            Tuple<int, int, int> resultR;
             Random random = new Random();
             
 
@@ -313,67 +293,94 @@ namespace Test
 
                 switch (action)
                 {
-                    case 1:
-                        for (int i = 0; i < heroList.Count(); i++)
+                    case "Q": 
+                        if (hero.getMana() >= 2)
                         {
-                            if (i == index)
-                                continue;
+                            for (int i = 0; i < heroList.Count(); i++)
+                            {
+                                if (i == index)
+                                    continue;
 
-                            // Lấy rival hero từ mảng hero list
-                            rivalHero = heroList[i];
+                                // Lấy rival hero từ mảng hero list
+                                rivalHero = heroList[i];
 
-                            // Thực hiện chiêu thức và nhận về các giá trị 
-                            result = hero.Q(rivalHero.getHealth(), hero.getMana(), hero.getFailed());
-                            rivalHero.setHealth(result.Item1);                                                     
-                            hero.setFailed(result.Item3);
+                                // Thực hiện chiêu thức và nhận về các giá trị 
+                                result = hero.Q(rivalHero.getHealth(), hero.getMana());
+                                rivalHero.setHealth(result.Item1);
+                            }
+                            hero.setMana(hero.getMana() - 2);
                         }
-
-                        hero.setMana(hero.getMana() - 2);
+                        else
+                        {
+                            hero.setFailed(hero.getFailed() + 1);
+                        }
                         break;
 
-                    case 2:                       
-                        result = hero.W(hero.getHealth(), hero.getMana(), hero.getFailed());
+                    case "W":                   
+                        if (hero.getMana() >= 3)
+                        {
+                            result = hero.W(hero.getHealth(), hero.getMana());
 
-                        hero.setHealth(result.Item1);
-                        hero.setFailed(result.Item3);
-                        hero.setMana(result.Item2 - 3);
+                            hero.setHealth(result.Item1);
+                       
+                            hero.setMana(result.Item2);
+                        }
+                        else
+                        {
+                            hero.setFailed(hero.getHealth() + 1);
+                        }    
+
                         break;
 
-                    case 3:
-                        do
+                    case "E":
+
+                        if (hero.getMana() >= 5)
                         {
                             // random ngẫu nhiên hero là hero đầu tiên
-                            first_hero = random.Next(heroList.Count());
-                        } while (first_hero == index);
-
-                        // Lấy rival hero từ mảng hero list
-                        rivalHero = heroList[first_hero];
-
-                        // Thực hiện chiêu thức và nhận về các giá trị 
-                        result = hero.E(rivalHero.getHealth(), hero.getMana(), hero.getFailed());
-                        rivalHero.setHealth(result.Item1);
-                        hero.setFailed(result.Item3);
-                        hero.setMana(result.Item2 - 5);
-                        break;
-
-                    case 4:
-                        for (int i = 0; i < heroList.Count(); i++)
-                        {
-                            if (i == index)
-                                continue;
+                            do
+                            {                             
+                                first_hero = random.Next(heroList.Count());
+                            } while (first_hero == index);
 
                             // Lấy rival hero từ mảng hero list
-                            rivalHero = heroList[i];
+                            rivalHero = heroList[first_hero];
 
                             // Thực hiện chiêu thức và nhận về các giá trị 
-                            resultR = hero.R(rivalHero.getHealth(), hero.getMana(), hero.getFailed(), hero.getHealth());
-                            rivalHero.setHealth(resultR.Item1);
-                            hero.setFailed(resultR.Item3);
+                            result = hero.E(rivalHero.getHealth(), hero.getMana());
+                            rivalHero.setHealth(result.Item1);
+                            hero.setMana(hero.getMana() - 5);
+                            
+                        }   
+                        else
+                        {
+                            hero.setFailed(hero.getFailed() + 1);
+                        }    
+                        
+                        break;
+
+                    case "R":
+                        if (hero.getMana() >= 10)
+                        {
+                            for (int i = 0; i < heroList.Count(); i++)
+                            {
+                                if (i == index)
+                                    continue;
+
+                                // Lấy rival hero từ mảng hero list
+                                rivalHero = heroList[i];
+
+                                // Thực hiện chiêu thức và nhận về các giá trị 
+                                resultR = hero.R(rivalHero.getHealth(), hero.getMana(), hero.getHealth());
+                                rivalHero.setHealth(resultR.Item1);
+                                
+                            }
+
+                            hero.setMana(hero.getMana() - 10);
                         }
-
-                        hero.setMana(hero.getMana() - 10);
-
-
+                        else
+                        {
+                            hero.setFailed(hero.getFailed() + 1);
+                        }
                         break;
 
                     default:
@@ -386,77 +393,108 @@ namespace Test
                
                 switch (action)
                 {
-                    case 1:
-                        for (int i = 0; i < heroList.Count(); i++)
+                    case "Q":
+                        if (hero.getMana() >= 3)
                         {
-                            if (i == index)
-                                continue;
+                            for (int i = 0; i < heroList.Count(); i++)
+                            {
+                                if (i == index)
+                                    continue;
 
-                            // Lấy rival hero từ mảng hero list
-                            rivalHero = heroList[i];
+                                // Lấy rival hero từ mảng hero list
+                                rivalHero = heroList[i];
 
-                            // Thực hiện chiêu thức và nhận về các giá trị 
-                            result = hero.Q(rivalHero.getHealth(), hero.getMana(), hero.getFailed());
-                            rivalHero.setHealth(result.Item1);
-                            hero.setFailed(result.Item3);
-                        }
+                                // Thực hiện chiêu thức và nhận về các giá trị 
+                                result = hero.Q(rivalHero.getHealth(), hero.getMana());
+                                rivalHero.setHealth(result.Item1);
+                               
+                            }
 
-                        hero.setMana(hero.getMana() - 3);
+                            hero.setMana(hero.getMana() - 3);
+                        } 
+                        else
+                        {
+                            hero.setFailed(hero.getFailed() + 1);
+                        }    
+                        
                         break;
-                    case 2:                        
-                        int loop;
-                        if (heroList.Count() == 2)
+                    case "W":  
+                        if (hero.getMana() >= 3)
                         {
-                            loop = 1;
+                            int loop;
+                            if (heroList.Count() == 2)
+                            {
+                                loop = 1;
+                            }
+                            else
+                            {
+                                loop = 0;
+                            }
+
+                            while (loop < 2)
+                            {
+                                do
+                                {
+                                    first_hero = random.Next(heroList.Count());
+                                } while (first_hero == index);
+
+                                // Lấy rival hero từ mảng hero list
+                                rivalHero = heroList[first_hero];
+
+                                // Thực hiện chiêu thức và nhận về các giá trị 
+                                result = hero.W(rivalHero.getHealth(), hero.getMana());
+                                rivalHero.setHealth(result.Item1);
+                                loop++;
+                            };
+                            hero.setMana(hero.getMana() - 3);
                         }    
                         else
                         {
-                            loop = 0;
+                            hero.setFailed(hero.getFailed() + 1);
                         }    
+                        
 
-                        while (loop < 2)
+                        break;
+                    case "E":
+                        if (hero.getMana() >= 5)
                         {
-                            do
-                            {
-                                first_hero = random.Next(heroList.Count());
-                            } while (first_hero == index);  
+                            result = hero.E(hero.getHealth(), hero.getMana());
 
-                            // Lấy rival hero từ mảng hero list
-                            rivalHero = heroList[first_hero];                        
+                            hero.setHealth(result.Item1);
+                            hero.setMana(result.Item2);
+                        }
+                        else
+                        {
+                            hero.setFailed(hero.getFailed() + 1);
+                        }    
+                        
 
-                            // Thực hiện chiêu thức và nhận về các giá trị 
-                            result = hero.W(rivalHero.getHealth(), hero.getMana(), hero.getFailed());
-                            rivalHero.setHealth(result.Item1);
-                            hero.setFailed(result.Item3);
-                            hero.setMana(result.Item2 - 3);
-                            
-                            loop++;
-                        } ;
 
                         break;
-                    case 3:
-                        result = hero.E(hero.getHealth(), hero.getMana(), hero.getFailed());
-
-                        hero.setHealth(result.Item1);
-                        hero.setFailed(result.Item3);
-                        hero.setMana(result.Item2 - 5);
-                        break;
-                    case 4:
-                        do
+                    case "R":
+                        if (hero.getMana() >= 10)
                         {
                             // random ngẫu nhiên hero là hero đầu tiên
-                            first_hero = random.Next(heroList.Count());
-                        } while (first_hero == index);
+                            do
+                            {                                
+                                first_hero = random.Next(heroList.Count());
+                            } while (first_hero == index);
 
-                        // Lấy rival hero từ mảng hero list
-                        rivalHero = heroList[first_hero];
+                            // Lấy rival hero từ mảng hero list
+                            rivalHero = heroList[first_hero];
 
-                        // Thực hiện chiêu thức và nhận về các giá trị 
-                        resultR = hero.R(rivalHero.getHealth(), hero.getMana(), hero.getFailed(), hero.getHealth());
-                        rivalHero.setHealth(resultR.Item1);
-                        hero.setFailed(resultR.Item3);
-                        hero.setMana(resultR.Item2 - 10);
-                        hero.setHealth(resultR.Item4);
+                            // Thực hiện chiêu thức và nhận về các giá trị 
+                            resultR = hero.R(rivalHero.getHealth(), hero.getMana(), hero.getHealth());
+                            rivalHero.setHealth(resultR.Item1);
+                            hero.setHealth(resultR.Item3);
+
+                            hero.setMana(resultR.Item2);
+                        }    
+                        
+                         else
+                        {
+                            hero.setFailed(hero.getFailed() + 1);
+                        }
                         break;
 
 
@@ -465,7 +503,9 @@ namespace Test
                         break;
                 }
 
-            }    
+            }
+
+            //ShowHeroList(heroList);
 
 
         }
@@ -475,13 +515,16 @@ namespace Test
 
         static void Main(string[] args)
         {
-            int action,n;
-            string name;
+            // 1. Khai báo biến
+            int n;
+            string name,action;
             bool checkAction,CheckQuantity;
             Hero checkHero;
 
+            // 2. Tạo list chứa các hero
+            List<Hero> heroList = new List<Hero>();
 
-            //1. Nhập số lượng hero tham gia trận chiến
+            // 3. Nhập số lượng hero tham gia trận chiến
             do
             {
                 Console.Write("So luong hero tham gia tran chien: ");
@@ -495,14 +538,14 @@ namespace Test
             } while (CheckQuantity == false);                
 
 
-            //3. Tạo list chứa các hero
-            List<Hero> heroList = new List<Hero>();
-
-
+            // 4. Nhập danh sách hero
             EnterHeroList(heroList, n);
 
-            while(true)
+
+            // 5. Bắt đầu trận chiến
+            while (true)
             {
+                // Kiểm tra tính hợp lệ của dữ liệu nhập vào. Ở đây là tên hero.
                 do
                 {
                     Console.WriteLine("Ban muon hero nao xuat chieu: ");
@@ -521,44 +564,59 @@ namespace Test
                 } while (checkHero == null);
 
 
-                // Chọn chiêu thức muốn thi triển
+                // Chọn chiêu thức muốn thi triển và kiểu tra tính hợp lệ của chiêu thức
                 do
                 {
-                    Console.WriteLine("Ban muon thuc hien chieu thuc nao: ");
-                    Console.WriteLine("1.Q");
-                    Console.WriteLine("2.W");
-                    Console.WriteLine("3.E");
-                    Console.WriteLine("4.R");
+                    Console.WriteLine("Ban muon thuc hien chieu thuc nao (Q,W,E,R): ");
 
-                    checkAction = int.TryParse(Console.ReadLine(), out action);
+
+                    action = Console.ReadLine().ToUpper();
+
 
                     Console.Write("\n");
 
-                    if (action > 4 || action < 1 || checkAction == false)
+                    if (action.Equals("Q"))
                     {
-                        Console.WriteLine("Chieu thuc khong hop le. Vui long nhap lai!");
-                        Console.Write("\n");
+                        break;
                     }
+                    else if (action.Equals("W"))
+                    {
+                        break;
+                    }
+                    else if (action.Equals("E"))
+                    {
+                        break;
+                    }
+                    else if (action.Equals("R"))
+                    {
+                        break;
+                    }
+                    else { Console.WriteLine("Chieu thuc ban nhap khong hop le. Vui long nhap lai!"); }
+
+                } while (true);
+
+                // Thi triển chiêu thức
+                TakeAction(name, action, heroList);
 
 
-                    TakeAction(name, action, heroList);
-                } while (action > 4 || action < 1 || checkAction == false);
+                Console.WriteLine("Tiep tuc --> Nhan Enter          Dung tran chien --> Escape: ");
 
-                //Console.WriteLine("Neu ban muon tiep tuc thi nhan: ");
-                //Console.WriteLine("Enter ");
-                //Console.WriteLine("Neu ban muon dung nhan: ");
-                //Console.WriteLine("Escape ");
 
-               var keyInput = Console.ReadKey();
+                var keyInput = Console.ReadKey(true);
 
-                if (keyInput.Key != ConsoleKey.Escape)
+                if (keyInput.Key == ConsoleKey.Escape)
                 {
                     break;
                 }
             }
 
 
-
+            //TakeAction("a", "R", heroList);
+            //TakeAction("b", "E", heroList);
+            //TakeAction("a", "W", heroList);
+            //TakeAction("a", "R", heroList);
+            //TakeAction("a", "R", heroList);
+            //TakeAction("b", "E", heroList);
 
             ShowHeroList(heroList);
             Console.ReadLine();
