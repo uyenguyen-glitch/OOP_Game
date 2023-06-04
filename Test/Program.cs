@@ -518,7 +518,7 @@ namespace Test
             // 1. Khai báo biến
             int n;
             string name,action;
-            bool checkAction,CheckQuantity;
+            bool CheckQuantity;
             Hero checkHero;
 
             // 2. Tạo list chứa các hero
@@ -530,12 +530,20 @@ namespace Test
                 Console.Write("So luong hero tham gia tran chien: ");
                 CheckQuantity = int.TryParse(Console.ReadLine(), out n);
 
-                if (CheckQuantity == false)
+                if (CheckQuantity == false || n <= 1)
                 {
-                    Console.WriteLine("Vui long nhap so nguyen!!!");
+                    if (CheckQuantity == false)
+                    {
+                        Console.WriteLine("Vui long nhap so nguyen!!!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("So luong hero tham gia tran chien phai lon hon 1!!!");
+                    } 
+                        
                 }
                 Console.Write("\n");
-            } while (CheckQuantity == false);                
+            } while (CheckQuantity == false || n <= 1);                
 
 
             // 4. Nhập danh sách hero
