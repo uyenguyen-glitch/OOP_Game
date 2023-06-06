@@ -433,6 +433,7 @@ namespace Test
 
                             while (loop < 2)
                             {
+                                // Lấy ngẫu nhiên 2 hero đầu tiên
                                 do
                                 {
                                     first_hero = random.Next(heroList.Count());
@@ -607,7 +608,7 @@ namespace Test
                 TakeAction(name, action, heroList);
 
 
-                Console.WriteLine("Tiep tuc --> Nhan Enter          Dung tran chien --> Escape: ");
+                Console.WriteLine("Tiep tuc --> Nhan Enter          Dung tran chien --> Nhan Escape: ");
 
 
                 var keyInput = Console.ReadKey(true);
